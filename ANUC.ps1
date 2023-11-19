@@ -1,4 +1,4 @@
-﻿#========================================================================
+#========================================================================
 # Date: 10/2/2011 8:34 PM
 # Author: Rich Prescott
 # Blog: blog.richprescott.com
@@ -12,57 +12,47 @@
 function OnApplicationLoad {
 $CreateXML = @"
 <?xml version="1.0" standalone="no"?>
-<OPTIONS Product="Arposh New User Creation" Version="1.2">
+<OPTIONS Product="Arposh Radius type New User Creation Tool" Version="2.0">
  <Settings>
-  <sAMAccountName Generate="True">
+  <sAMAccountName Generate="False">
    <Style Format="FirstName.LastName" Enabled="True" />
    <Style Format="FirstInitialLastName" Enabled="False" />
    <Style Format="LastNameFirstInitial" Enabled="False" />
   </sAMAccountName>
-  <UPN Generate="True">
+  <UPN Generate="False">
    <Style Format="FirstName.LastName" Enabled="True" />
    <Style Format="FirstInitialLastName" Enabled="False" />
    <Style Format="LastNameFirstInitial" Enabled="False" />
   </UPN>
-  <DisplayName Generate="True">
-   <Style Format="FirstName LastName" Enabled="False" />
-   <Style Format="LastName, FirstName" Enabled="True" />
+  <DisplayName Generate="False">
+   <Style Format="FirstName LastName" Enabled="True" />
+   <Style Format="LastName, FirstName" Enabled="False" />
   </DisplayName>
   <AccountStatus Enabled="True" />
-  <Password ChangeAtLogon="True" />
+  <Password ChangeAtLogon="False" />
+  <Password NeverExpire="True" />
+  <Password CannotChange="True" />
  </Settings>
  <Default>
-  <Domain>RU.lab</Domain>
-  <Path>OU=MyOU,DC=ru,DC=lab</Path>
+  <Domain>RDS.LOCAL</Domain>
+  <Path>OU=MAC,DC=RDS,DC=LOCAL</Path>
   <FirstName></FirstName>
   <LastName></LastName>
   <Office></Office>
   <Title></Title>
-  <Description>Full-Time Employee</Description>
-  <Department>IT</Department>
-  <Company>Arposh</Company>
-  <Phone>212-555-1000</Phone>
-  <Site>NY</Site>
-  <StreetAddress>100 Main Street</StreetAddress>
-  <City>New York</City>
-  <State>NY</State>
-  <PostalCode>10001</PostalCode>
-  <Password>P@ssw0rd</Password>
+  <Description></Description>
+  <Department></Department>
+  <Company></Company>
+  <Phone></Phone>
+  <Site></Site>
+  <StreetAddress></StreetAddress>
+  <City></City>
+  <State></State>
+  <PostalCode></PostalCode>
+  <Password></Password>
  </Default>
  <Locations>
-  <Location Site="NY">
-   <StreetAddress>1 Main Street</StreetAddress>
-   <City>New York</City>
-   <State>NY</State>
-   <PostalCode>10001</PostalCode>
-  </Location>
-  <Location Site="NJ">
-   <StreetAddress>2 Main Street</StreetAddress>
-   <City>Edison</City>
-   <State>NJ</State>
-   <PostalCode>22222</PostalCode>
-  </Location>
-  <Location Site="Custom">
+  <Location Site="TR">
    <StreetAddress></StreetAddress>
    <City></City>
    <State></State>
@@ -70,33 +60,15 @@ $CreateXML = @"
   </Location>
  </Locations>
  <Domains>
-  <Domain Name="RU.lab">
-   <Path>OU=MyOU,DC=ru,DC=lab</Path>
-   <Path>CN=Users,DC=ru,DC=lab</Path>
-  </Domain>
-  <Domain Name="RP.lab">
-   <Path>OU=RPUsers1,DC=rp,DC=lab</Path>
-   <Path>OU=RPUsers2,DC=rp,DC=lab</Path>
-   <Path>OU=RPUsers3,DC=rp,DC=lab</Path>
+  <Domain Name="RDS.LOCAL">
+   <Path>OU=MAC,DC=RDS,DC=LOCAL</Path>
   </Domain>
  </Domains>
  <Descriptions>
- <Description>Full-Time Employee</Description>
-  <Description>Part-Time Employee</Description>
-  <Description>Consultant</Description>
-  <Description>Intern</Description>
-  <Description>Service Account</Description>
-  <Description>Temp</Description>
-  <Description>Freelancer</Description>
+  <Description></Description>
  </Descriptions>
  <Departments>
-  <Department>Finance</Department>
   <Department>IT</Department>
-  <Department>Marketing</Department>
-  <Department>Sales</Department>
-  <Department>Executive</Department>
-  <Department>Human Resources</Department>
-  <Department>Security</Department>
  </Departments>
 </OPTIONS>
 "@
@@ -219,17 +191,17 @@ function Call-ANUC_pff {
 	$txtUPN = New-Object System.Windows.Forms.TextBox
 	$txtsAM = New-Object System.Windows.Forms.TextBox
 	$txtDN = New-Object System.Windows.Forms.TextBox
-	$cboDepartment = New-Object System.Windows.Forms.ComboBox
+	$cboDepartment = New-Object System.Windows.Forms.TextBox
 	$labelUserPrincipalName = New-Object System.Windows.Forms.Label
 	$labelSamAccountName = New-Object System.Windows.Forms.Label
 	$labelDisplayName = New-Object System.Windows.Forms.Label
 	$SB = New-Object System.Windows.Forms.StatusBar
-	$cboSite = New-Object System.Windows.Forms.ComboBox
+	$cboSite = New-Object System.Windows.Forms.TextBox
 	$labelSite = New-Object System.Windows.Forms.Label
-	$cboDescription = New-Object System.Windows.Forms.ComboBox
+	$cboDescription = New-Object System.Windows.Forms.TextBox
 	$txtPassword = New-Object System.Windows.Forms.TextBox
 	$labelPassword = New-Object System.Windows.Forms.Label
-	$cboDomain = New-Object System.Windows.Forms.ComboBox
+	$cboDomain = New-Object System.Windows.Forms.TextBox
 	$labelCurrentDomain = New-Object System.Windows.Forms.Label
 	$txtPostalCode = New-Object System.Windows.Forms.TextBox
 	$txtState = New-Object System.Windows.Forms.TextBox
@@ -240,7 +212,7 @@ function Call-ANUC_pff {
 	$txtTitle = New-Object System.Windows.Forms.TextBox
 	$txtOfficePhone = New-Object System.Windows.Forms.TextBox
 	$txtLastName = New-Object System.Windows.Forms.TextBox
-	$cboPath = New-Object System.Windows.Forms.ComboBox
+	$cboPath = New-Object System.Windows.Forms.TextBox
 	$labelOU = New-Object System.Windows.Forms.Label
 	$txtFirstName = New-Object System.Windows.Forms.TextBox
 	$labelPostalCode = New-Object System.Windows.Forms.Label
@@ -276,33 +248,18 @@ function Call-ANUC_pff {
 		
 		$formMain.Text = $formMain.Text + " " + $XML.Options.Version
 		
-		Write-Verbose "Adding domains to combo box"
-		$XML.Options.Domains.Domain | %{$cboDomain.Items.Add($_.Name)}
-		
-		Write-Verbose "Adding OUs to combo box"
-	    $XML.Options.Domains.Domain | ?{$_.Name -match $cboDomain.Text} | Select -ExpandProperty Path | %{$cboPath.Items.Add($_)}
-		
-		Write-Verbose "Adding descriptions to combo box"
-		$XML.Options.Descriptions.Description | %{$cboDescription.Items.Add($_)}
-		
-		Write-Verbose "Adding sites to combo box"
-		$XML.Options.Locations.Location | %{$cboSite.Items.Add($_.Site)}
-		
-		Write-Verbose "Adding departments to combo box"
-		$XML.Options.Departments.Department | %{$cboDepartment.Items.Add($_)}
-		
 		Write-Verbose "Setting default fields"
-		$cboDomain.SelectedItem = $XML.Options.Default.Domain
-	    $cboPath.SelectedItem = $XML.Options.Default.Path
+		$cboDomain.Text = ""
+	    $cboPath.Text = ""
 		$txtFirstName.Text = $XML.Options.Default.FirstName
 		$txtLastName.Text = $XML.Options.Default.LastName
 		$txtOffice.Text = $XML.Options.Default.Office
 		$txtTitle.Text = $XML.Options.Default.Title
-		$cboDescription.SelectedItem = $XML.Options.Default.Description
-		$cboDepartment.SelectedItem = $XML.Options.Default.Department
+		$cboDescription.Text = ""
+		$cboDepartment.Text = ""
 		$txtCompany.Text = $XML.Options.Default.Company
 		$txtOfficePhone.Text = $XML.Options.Default.Phone
-		$cboSite.SelectedItem = $XML.Options.Default.Site
+		$cboSite.Text = ""
 		$txtStreetAddress.Text = $XML.Options.Default.StreetAddress
 		$txtCity.Text = $XML.Options.Default.City
 		$txtState.Text = $XML.Options.Default.State
@@ -334,7 +291,13 @@ function Call-ANUC_pff {
 		if($XML.Options.Settings.Password.ChangeAtLogon -eq "True"){$ChangePasswordAtLogon = $True}
         else{$ChangePasswordAtLogon = $false}
 		
-        if($XML.Options.Settings.AccountStatus.Enabled -eq "True"){$Enabled = $True}
+        if($XML.Options.Settings.Password.NeverExpire -eq "True"){$NeverExpire = $True}
+        else{$NeverExpire = $false}
+
+		if($XML.Options.Settings.Password.CannotChange -eq "True"){$CannotChange = $True}
+		else{$CannotChange = $false}
+
+		if($XML.Options.Settings.AccountStatus.Enabled -eq "True"){$Enabled = $True}
         else{$Enabled = $false}
 	
 		$Name="$GivenName $Surname"
@@ -351,7 +314,7 @@ function Call-ANUC_pff {
 		$AccountPassword = $txtPassword.text | ConvertTo-SecureString -AsPlainText -Force
 	
 		$User = @{
-		    Name = $Name
+		    Name = $GivenName
 		    GivenName = $GivenName
 		    Surname = $Surname
 		    Path = $Path
@@ -360,6 +323,8 @@ function Call-ANUC_pff {
 		    DisplayName = $DisplayName
 		    AccountPassword = $AccountPassword
 		    ChangePasswordAtLogon = $ChangePasswordAtLogon
+			PasswordNeverExpires = $NeverExpire
+			CannotChangePassword = $CannotChange
 		    Enabled = $Enabled
 		    OfficePhone = $OfficePhone
 		    Description = $Description
@@ -374,15 +339,26 @@ function Call-ANUC_pff {
 		    }
 		$SB.Text = "Creating new user $sAMAccountName"
         $ADError = $Null
-		New-ADUser @User -ErrorVariable ADError
+		if (Get-ADUser -Filter {SamAccountName -eq $samAccountName}){
+			# If user already exists, give a warning.
+			Write-Warning "A user account with $samAccountName : already exist in Active Directory."
+			}
+			else{
+				try{
+					New-ADUser @User -ErrorVariable ADError}
+				catch{
+					[Microsoft.ActiveDirectory.Management.ADIdentityAlreadyExistsException]{
+						Write-Error "Account already exists: $GivenName"}
+					# Write-Error "$($_.CategoryInfo)  $($_.Exception.Message)"
+				}
+			}
         if ($ADerror){$SB.Text = "[$sAMAccountName] $ADError"}
         else{$SB.Text = "$sAMAccountName created successfully."}
 	}
 	
-	$cboDomain_SelectedIndexChanged={
-		$cboPath.Items.Clear()
-		Write-Verbose "Adding OUs to combo box"
-	    $XML.Options.Domains.Domain | ?{$_.Name -match $cboDomain.Text} | Select -ExpandProperty Path | %{$cboPath.Items.Add($_)}	
+	$cboDomain_Texthanged={
+		$cboPath = $lvCSV.SelectedItems[0].SubItems[2].Text
+		$cboDomin.Text = $lvCSV.SelectedItems[0].SubItems[1].Text
 		Write-Verbose "Creating required account fields"
 		
         if ($XML.Options.Settings.DisplayName.Generate) {$txtDN.Text = Set-DisplayName}
@@ -390,9 +366,8 @@ function Call-ANUC_pff {
         if ($XML.Options.Settings.UPN.Generate) {$txtUPN.Text = Set-UPN}	
 	}
 	
-	$cboSite_SelectedIndexChanged={
+	$cboSite_TextChanged={
 		Write-Verbose "Updating site fields with address information"
-	    $Site = $XML.Options.Locations.Location | ?{$_.Site -match $cboSite.Text}
 		$txtStreetAddress.Text = $Site.StreetAddress
 		$txtCity.Text = $Site.City
 		$txtState.Text = $Site.State
@@ -490,14 +465,14 @@ function Call-ANUC_pff {
 	}
 	
 	$lvCSV_SelectedIndexChanged={
-		try{$cboDomain.SelectedItem = $lvCSV.SelectedItems[0].SubItems[1].Text}catch{}
-		try{$cboPath.SelectedItem = $lvCSV.SelectedItems[0].SubItems[2].Text}catch{}
+		try{$cboDomain.Text = $lvCSV.SelectedItems[0].SubItems[1].Text}catch{}
+		try{$cboPath.Text = $lvCSV.SelectedItems[0].SubItems[2].Text}catch{}
 		try{$txtFirstName.Text = $lvCSV.SelectedItems[0].SubItems[3].Text}catch{}
 		try{$txtLastName.Text = $lvCSV.SelectedItems[0].SubItems[4].Text}catch{}
 		try{$txtOffice.Text = $lvCSV.SelectedItems[0].SubItems[5].Text}catch{}
 		try{$txtTitle.Text = $lvCSV.SelectedItems[0].SubItems[6].Text}catch{}
-		try{$cboDescription.SelectedItem = $lvCSV.SelectedItems[0].SubItems[7].Text}catch{}
-		try{$cboDepartment.SelectedItem = $lvCSV.SelectedItems[0].SubItems[8].Text}catch{}
+		try{$cboDescription.Text = $lvCSV.SelectedItems[0].SubItems[7].Text}catch{}
+		try{$cboDepartment.Text = $lvCSV.SelectedItems[0].SubItems[8].Text}catch{}
 		try{$txtCompany.Text = $lvCSV.SelectedItems[0].SubItems[9].Text}catch{}
 		try{$txtOfficePhone.Text = $lvCSV.SelectedItems[0].SubItems[10].Text}catch{}
 		try{$txtStreetAddress.Text = $lvCSV.SelectedItems[0].SubItems[11].Text}catch{}
@@ -549,12 +524,12 @@ function Call-ANUC_pff {
 			$Path = $_.Subitems[2].Text
 			$GivenName = $_.Subitems[3].Text
 			$Surname = $_.Subitems[4].Text
-			$OfficePhone = $_.Subitems[5].Text
+			$Office = $_.Subitems[5].Text
 			$Title = $_.Subitems[6].Text
 			$Description = $_.Subitems[7].Text
 			$Department = $_.Subitems[8].Text
 			$Company = $_.Subitems[9].Text
-			$Office = $_.Subitems[10].Text
+			$OfficePhone = $_.Subitems[10].Text
 			$StreetAddress = $_.Subitems[11].Text
 			$City = $_.Subitems[12].Text
 			$State = $_.Subitems[13].Text
@@ -568,7 +543,13 @@ function Call-ANUC_pff {
             if($XML.Options.Settings.AccountStatus.Enabled -eq "True"){$Enabled = $True}
             else{$Enabled = $false}
 	
-		    if($_.Subitems[16].Text -eq $null){$sAMAccountName = Set-sAMAccountName}
+		    if($XML.Options.Settings.Password.NeverExpire -eq "True"){$NeverExpire = $True}
+			else{$NeverExpire = $false}
+
+			if($XML.Options.Settings.Password.CannotChange -eq "True"){$CannotChange = $True}
+			else{$CannotChange = $false}
+
+			if($_.Subitems[16].Text -eq $null){$sAMAccountName = Set-sAMAccountName}
 		    else{$sAMAccountName = $_.Subitems[16].Text}
 
             if($_.Subitems[17].Text -eq $null){$userPrincipalName = Set-UPN}
@@ -580,7 +561,7 @@ function Call-ANUC_pff {
 			$AccountPassword = $_.Subitems[15].Text | ConvertTo-SecureString -AsPlainText -Force
 	
 			$User = @{
-			    Name = $Name
+			    Name = $GivenName
 			    GivenName = $GivenName
 			    Surname = $Surname
 			    Path = $Path
@@ -589,6 +570,8 @@ function Call-ANUC_pff {
 			    DisplayName = $DisplayName
 			    AccountPassword = $AccountPassword
 			    ChangePasswordAtLogon = $ChangePasswordAtLogon
+				PasswordNeverExpires = $NeverExpire
+				CannotChangePassword = $CannotChange
 			    Enabled = $Enabled
 			    OfficePhone = $OfficePhone
 			    Description = $Description
@@ -603,9 +586,21 @@ function Call-ANUC_pff {
 			    }
 			$SB.Text = "Creating new user $sAMAccountName"
             $ADError = $Null
-			New-ADUser @User -ErrorVariable ADError
+			if (Get-ADUser -Filter {SamAccountName -eq $samAccountName}){
+				# If user already exists, give a warning.
+				Write-Warning "A user account with $samAccountName : already exist in Active Directory."
+				}
+				else{
+					try{
+						New-ADUser @User -ErrorVariable ADError}
+					catch{
+						[Microsoft.ActiveDirectory.Management.ADIdentityAlreadyExistsException]{
+							Write-Error "Account already exists: $GivenName"}
+						# Write-Error "$($_.CategoryInfo)  $($_.Exception.Message)"
+					}
             if ($ADerror){$SB.Text = "[$sAMAccountName] $ADError"}
             else{$SB.Text = "$sAMAccountName created successfully."}
+				}
 		}
 	}
 	
@@ -632,9 +627,9 @@ function Call-ANUC_pff {
 			$btnPrev.remove_Click($btnPrev_Click)
 			$btnFirst.remove_Click($btnFirst_Click)
 			$btnImportCSV.remove_Click($btnImportCSV_Click)
-			$lvCSV.remove_SelectedIndexChanged($lvCSV_SelectedIndexChanged)
-			$cboSite.remove_SelectedIndexChanged($cboSite_SelectedIndexChanged)
-			$cboDomain.remove_SelectedIndexChanged($cboDomain_SelectedIndexChanged)
+			$lvCSV.remove_TextChanged($lvCSV_TextChanged)
+			$cboSite.remove_TextChanged($cboSite_TextChanged)
+			$cboDomain.remove_TextChanged($cboDomain_TextChanged)
 			$txtLastName.remove_TextChanged($txtName_TextChanged)
 			$txtFirstName.remove_TextChanged($txtName_TextChanged)
 			$btnSubmit.remove_Click($btnSubmit_Click)
@@ -717,7 +712,7 @@ function Call-ANUC_pff {
 	$formMain.Name = "formMain"
 	$formMain.ShowIcon = $False
 	$formMain.StartPosition = 'CenterScreen'
-	$formMain.Text = "Arposh New User Creation"
+	$formMain.Text = "Arposh Radius type New User Creation Tool"
 	$formMain.add_Load($formMain_Load)
 	#
 	# btnSubmitAll
@@ -826,7 +821,6 @@ function Call-ANUC_pff {
 	# cboDepartment
 	#
 	$cboDepartment.Anchor = 'Top, Left, Right'
-	$cboDepartment.FormattingEnabled = $True
 	$cboDepartment.Location = '118, 235'
 	$cboDepartment.Name = "cboDepartment"
 	$cboDepartment.Size = '173, 21'
@@ -870,12 +864,11 @@ function Call-ANUC_pff {
 	# cboSite
 	#
 	$cboSite.Anchor = 'Top, Left, Right'
-	$cboSite.FormattingEnabled = $True
 	$cboSite.Location = '118, 320'
 	$cboSite.Name = "cboSite"
 	$cboSite.Size = '173, 21'
 	$cboSite.TabIndex = 11
-	$cboSite.add_SelectedIndexChanged($cboSite_SelectedIndexChanged)
+	$cboSite.add_TextChanged($cboSite_TextChanged)
 	#
 	# labelSite
 	#
@@ -889,7 +882,6 @@ function Call-ANUC_pff {
 	# cboDescription
 	#
 	$cboDescription.Anchor = 'Top, Left, Right'
-	$cboDescription.FormattingEnabled = $True
 	$cboDescription.Location = '118, 210'
 	$cboDescription.Name = "cboDescription"
 	$cboDescription.Size = '173, 21'
@@ -916,12 +908,11 @@ function Call-ANUC_pff {
 	# cboDomain
 	#
 	$cboDomain.Anchor = 'Top, Left, Right'
-	$cboDomain.FormattingEnabled = $True
 	$cboDomain.Location = '118, 35'
 	$cboDomain.Name = "cboDomain"
 	$cboDomain.Size = '173, 21'
 	$cboDomain.TabIndex = 1
-	$cboDomain.add_SelectedIndexChanged($cboDomain_SelectedIndexChanged)
+	$cboDomain.add_TextChanged($cboDomain_TextChanged)
 	#
 	# labelCurrentDomain
 	#
@@ -1008,7 +999,7 @@ function Call-ANUC_pff {
 	# cboPath
 	#
 	$cboPath.Anchor = 'Top, Left, Right'
-	$cboPath.FormattingEnabled = $True
+	#$cboPath.FormattingEnabled = $True
 	$cboPath.Location = '45, 65'
 	$cboPath.Name = "cboPath"
 	$cboPath.Size = '247, 21'
@@ -1187,7 +1178,7 @@ function Call-ANUC_pff {
 	#
 	# OFDImportCSV
 	#
-	$OFDImportCSV.FileName = "C:\ANUC\AnucUsers.csv"
+	$OFDImportCSV.FileName = "C:\TEMP\AnucUsers.csv"
 	$OFDImportCSV.ShowHelp = $True
 	#
 	# CreateCSVTemplate
