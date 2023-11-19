@@ -26,7 +26,6 @@ One task that every systems administrator has to go through at some point is the
   * City
   * State
   * Postal Code
-* Pre-populated fields for easy selection
   * Address information
   * Domains
   * OUs
@@ -34,6 +33,16 @@ One task that every systems administrator has to go through at some point is the
   * Departments
 
 ## Changelog
+
+2.0 - 19.11.2023
+* Added Password Never Expire option
+* Added Password Cannot Change option
+* Change get Current Domain value from csv
+* Change get OU value from csv
+* Change get Description value from csv
+* Change get Departman value from csv
+* Change get Site value from csv
+* Minor improve code
 
 1.2 - 2012/12/04
 * Added check for XML Options file - Will now prompt to create one if not found
