@@ -345,14 +345,14 @@ function Call-ANUC_pff {
 			}
 			else{
 				try{
-					New-ADUser @User -ErrorVariable ADError}
+					New-ADUser @User -ErrorVariable ADErrorn
+				}
 				catch{
-					[Microsoft.ActiveDirectory.Management.ADIdentityAlreadyExistsException]{
-						Write-Error "Account already exists: $GivenName"}
-					# Write-Error "$($_.CategoryInfo)  $($_.Exception.Message)"
+					Write-Host "$($_.CategoryInfo)"
+					Write-Host "$($_.Exception.Message)"
 				}
 			}
-        if ($ADerror){$SB.Text = "[$sAMAccountName] $ADError"}
+		if ($ADerror){$SB.Text = "[$sAMAccountName] $ADError"}
         else{$SB.Text = "$sAMAccountName created successfully."}
 	}
 	
@@ -592,15 +592,15 @@ function Call-ANUC_pff {
 				}
 				else{
 					try{
-						New-ADUser @User -ErrorVariable ADError}
-					catch{
-						[Microsoft.ActiveDirectory.Management.ADIdentityAlreadyExistsException]{
-							Write-Error "Account already exists: $GivenName"}
-						# Write-Error "$($_.CategoryInfo)  $($_.Exception.Message)"
+						New-ADUser @User -ErrorVariable ADErrorn
 					}
-            if ($ADerror){$SB.Text = "[$sAMAccountName] $ADError"}
-            else{$SB.Text = "$sAMAccountName created successfully."}
+					catch{
+						Write-Host "$($_.CategoryInfo)"
+						Write-Host "$($_.Exception.Message)"
+					}
 				}
+			if ($ADerror){$SB.Text = "[$sAMAccountName] $ADError"}
+            else{$SB.Text = "$sAMAccountName created successfully."}
 		}
 	}
 	
