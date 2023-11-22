@@ -1,14 +1,14 @@
 # UserCreation
-GUI to create new users with templates or in batches
+GUI to create new object with templates or in batches
 
 ## Description
 
-One task that every systems administrator has to go through at some point is the creation of new user accounts.  Over time, this becomes burdensome and tedious.  The Active Directory wizard takes you through multiple screens and you have to enter the same information multiple times in some occasions (e.g. a lot of organizations use FirstName.LastName for samAccountNames).  It also does not allow you to set all of the fields that you want included in the wizard.  I wanted a way to include those fields and an option to set defaults for some fields.  Luckily Powershell makes all of that possible in an easy to use way.  Powershell does all of the heavy lifting and an optional XML file saves even more time by pre-populating certain fields and setting defaults.  You also have the ability of bulk-adding users via CSV.  To create users from a CSV, click on File > CSV Mode.  You can then import the CSV and browse through the users in the CSV.  Once the CSV is imported, you can create one user at a time or all at once.  If you want a CSV template created for you, click on File > Create CSV Template.
+One task that every systems administrator has to go through at some point is the creation of new object accounts.  Over time, this becomes burdensome and tedious.  The Active Directory wizard takes you through multiple screens and you have to enter the same information multiple times in some occasions (e.g. a lot of organizations use FirstName.LastName for samAccountNames).  It also does not allow you to set all of the fields that you want included in the wizard.  I wanted a way to include those fields and an option to set defaults for some fields.  Luckily Powershell makes all of that possible in an easy to use way.  Powershell does all of the heavy lifting and an optional XML file saves even more time by pre-populating certain fields and setting defaults.  You also have the ability of bulk-adding objects via CSV.  To create objects from a CSV, click on File > CSV Mode.  You can then import the CSV and browse through the objects in the CSV.  Once the CSV is imported, you can create one object at a time or all at once.  If you want a CSV template created for you, click on File > Create CSV Template.
 
 ## Features
 
-* Allows user creation with oft-used Active Directory attributes
-* Bulk creation of users from CSV
+* Allows object creation with oft-used Active Directory attributes
+* Bulk creation of objects from CSV
 * Auto-generation of account attributes based on other attributes
   * Display Name
   * samAccountName
