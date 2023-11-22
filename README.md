@@ -1,4 +1,4 @@
-# UserCreation
+# ObjectCreation
 GUI to create new object with templates or in batches
 
 ## Description
